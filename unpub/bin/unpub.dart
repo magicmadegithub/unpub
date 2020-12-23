@@ -6,7 +6,7 @@ import 'package:unpub/unpub.dart' as unpub;
 main(List<String> args) async {
   var parser = ArgParser();
   parser.addOption('host', abbr: 'h', defaultsTo: '0.0.0.0');
-  parser.addOption('port', abbr: 'p', defaultsTo: '4000');
+  parser.addOption('port', abbr: 'p', defaultsTo: '8282');
   parser.addOption('database',
       abbr: 'd', defaultsTo: 'mongodb://peter:peter_mongo@127.0.0.1/dart_pub');
   print('启动了启动了');
