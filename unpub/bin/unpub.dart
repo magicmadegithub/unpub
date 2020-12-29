@@ -22,8 +22,8 @@ main(List<String> args) async {
     exit(1);
   }
 
-  var baseDir = path.absolute('unpub-packages');
-
+  var baseDir = path.absolute('/root/clientProjects/unpub/unpub-packages');
+  print(baseDir);
   var mongoStore = unpub.MongoStore(db);
   await mongoStore.db.open();
 
