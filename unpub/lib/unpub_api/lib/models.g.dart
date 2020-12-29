@@ -31,6 +31,7 @@ ListApiPackage _$ListApiPackageFromJson(Map<String, dynamic> json) {
     json['updatedAt'] == null
         ? null
         : DateTime.parse(json['updatedAt'] as String),
+     json['download'] as int,
   );
 }
 
@@ -41,6 +42,7 @@ Map<String, dynamic> _$ListApiPackageToJson(ListApiPackage instance) =>
       'tags': instance.tags,
       'latest': instance.latest,
       'updatedAt': instance.updatedAt?.toIso8601String(),
+      'download':instance.download,
     };
 
 DetailViewVersion _$DetailViewVersionFromJson(Map<String, dynamic> json) {

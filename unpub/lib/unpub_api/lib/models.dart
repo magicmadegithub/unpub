@@ -20,9 +20,10 @@ class ListApiPackage {
   List<String> tags;
   String latest;
   DateTime updatedAt;
+  int download;
 
   ListApiPackage(
-      this.name, this.description, this.tags, this.latest, this.updatedAt);
+      this.name, this.description, this.tags, this.latest, this.updatedAt, this.download);
 
   factory ListApiPackage.fromJson(Map<String, dynamic> map) =>
       _$ListApiPackageFromJson(map);

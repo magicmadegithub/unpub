@@ -378,17 +378,16 @@ class App {
     var packages =
         await metaStore.queryPackages(size, page, sort, q).map((package) {
       var latest = package.versions.last;
-
       return ListApiPackage(
         package.name,
         latest.pubspec['description'] as String,
         getPackageTags(latest.pubspec),
         latest.version,
         package.updatedAt,
+        package.download,
       );
     }).toList();
     var data = ListApi(count, packages);
-
     return _okWithJson({'data': data.toJson()});
   }
 
