@@ -30,7 +30,8 @@ main(List<String> args) async {
   var app = unpub.App(
     metaStore: mongoStore,
     packageStore: unpub.FileStore(baseDir),
-    upstream: 'https://pub.flutter-io.cn/ '
+    upstream: 'https://pub.flutter-io.cn',
+    overrideUploaderEmail: 'pub@tal.com',
   );
 
   var server = await app.serve(host, port);

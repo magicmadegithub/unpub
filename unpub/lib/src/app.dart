@@ -33,7 +33,7 @@ class App {
   App({
     @required this.metaStore,
     @required this.packageStore,
-    this.upstream = 'https://pub.dev',
+    this.upstream = 'https://pub.flutter-io.cn',
     this.googleapisProxy,
     this.overrideUploaderEmail,
     this.uploadValidator,
@@ -66,7 +66,6 @@ class App {
 
   Future<String> _getUploaderEmail(shelf.Request req) async {
     if (overrideUploaderEmail != null) return overrideUploaderEmail;
-
     var authHeader = req.headers[HttpHeaders.authorizationHeader];
     if (authHeader == null) return null;
 
@@ -212,7 +211,6 @@ class App {
   Future<shelf.Response> upload(shelf.Request req) async {
     try {
       var email = await _getUploaderEmail(req);
-
       var mediaType = MediaType.parse(req.headers['content-type']);
 
       var boundary = mediaType.parameters['boundary'];
@@ -271,8 +269,11 @@ class App {
         }
 
         // Check uploaders
-        if (!package.uploaders.contains(email)) {
-          throw '$email is not an uploader of $name';
+        if (email != 'pub@tal.com') {
+          if (!package.uploaders.contains(email)) {
+            print(package.uploaders);
+            throw '$email is not an uploader of $name';
+          }
         }
 
         // Check duplicated version
@@ -282,7 +283,7 @@ class App {
           throw 'version invalid: $name@$version already exists.';
         }
       }
-
+      print('走到了packageStore');
       // Upload package tarball to storage
       await packageStore.upload(name, version, tarballBytes);
 
@@ -306,12 +307,13 @@ class App {
         DateTime.now(),
       );
       await metaStore.addVersion(name, unpubVersion);
-
       // TODO: Upload docs
+      print(req.requestedUri);
       return shelf.Response.found(req.requestedUri
           .resolve('/api/packages/versions/newUploadFinish')
           .toString());
     } catch (err) {
+      print('走到了upload的error');
       return shelf.Response.found(req.requestedUri
           .resolve('/api/packages/versions/newUploadFinish?error=$err'));
     }
@@ -320,6 +322,7 @@ class App {
   @Route.get('/api/packages/versions/newUploadFinish')
   Future<shelf.Response> uploadFinish(shelf.Request req) async {
     var error = req.requestedUri.queryParameters['error'];
+    print(error);
     if (error != null) {
       return _badRequest(error);
     }
