@@ -30,6 +30,7 @@ main(List<String> args) async {
   var app = unpub.App(
     metaStore: mongoStore,
     packageStore: unpub.FileStore(baseDir),
+    upstream: 'https://pub.flutter-io.cn/ '
   );
 
   var server = await app.serve(host, port);
