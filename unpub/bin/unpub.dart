@@ -30,7 +30,6 @@ main(List<String> args) async {
   var app = unpub.App(
     metaStore: mongoStore,
     packageStore: unpub.FileStore(baseDir),
-    overrideUploaderEmail: "pub@tal.com"
   );
 
   var server = await app.serve(host, port);
